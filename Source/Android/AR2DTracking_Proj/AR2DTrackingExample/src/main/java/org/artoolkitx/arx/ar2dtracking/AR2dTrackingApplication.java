@@ -58,6 +58,7 @@ public class AR2dTrackingApplication extends Application {
         super.onCreate();
         mContext = getContext();
         this.initializeInstance();
+        this.initializeStorage();
     }
 
     // Here we do one-off initialisation which should apply to all activities
@@ -70,5 +71,13 @@ public class AR2dTrackingApplication extends Application {
         AssetHelper assetHelper = new AssetHelper(getAssets());
         assetHelper.cacheAssetFolder(this, "Data");
         assetHelper.cacheAssetFolder(this, "cparam_cache");
+    }
+
+    protected void initializeStorage() {
+        String filepath = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(filepath + "/ARSUR" );
+        if (!file.exists()) {
+            file.mkdirs();
+        }
     }
 }
