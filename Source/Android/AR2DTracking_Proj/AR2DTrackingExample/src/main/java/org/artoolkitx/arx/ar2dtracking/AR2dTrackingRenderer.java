@@ -37,6 +37,7 @@
 package org.artoolkitx.arx.ar2dtracking;
 
 import android.opengl.GLES20;
+import android.os.Environment;
 
 import org.artoolkitx.arx.arxj.ARController;
 import org.artoolkitx.arx.arxj.ARX_jni;
@@ -46,6 +47,9 @@ import org.artoolkitx.arx.arxj.rendering.shader_impl.Cube;
 import org.artoolkitx.arx.arxj.rendering.shader_impl.SimpleFragmentShader;
 import org.artoolkitx.arx.arxj.rendering.shader_impl.SimpleShaderProgram;
 import org.artoolkitx.arx.arxj.rendering.shader_impl.SimpleVertexShader;
+
+import java.io.File;
+import java.util.Arrays;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -57,9 +61,9 @@ class AR2dTrackingRenderer extends ARRenderer {
 
     private SimpleShaderProgram shaderProgram;
 
-    private static final Trackable trackables[];
+    private static Trackable[] trackables;
 
-    private int trackableUIDs[];
+    private int[] trackableUIDs;
     
     private Cube cube;
 
@@ -68,12 +72,13 @@ class AR2dTrackingRenderer extends ARRenderer {
      */
     @Override
     public boolean configureARScene() {
-        File storageFiles = new File(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" );
-        int fileCount = storageFiles.list().size();
+        File storageDir = new File(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" );
+        String storageFiles[] = storageDir.list();
+        int fileCount = storageFiles.length;
         trackables = new Trackable[fileCount];
-        trackableUIDs[] = new int[fileCount];
+        trackableUIDs = new int[fileCount];
         for (int i = 0; i < fileCount; i++) {
-            trackables[i] = new Trackable(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" + storageFiles.list().toArray()[i] , 1.0f);
+            trackables[i] = new Trackable(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" + Arrays.asList(storageFiles), 1.0f);
         }
         int i = 0;
         for (Trackable trackable : trackables) {

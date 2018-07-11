@@ -42,8 +42,11 @@ package org.artoolkitx.arx.ar2dtracking;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 
 import org.artoolkitx.arx.arxj.assets.AssetHelper;
+
+import java.io.File;
 
 public class AR2dTrackingApplication extends Application {
 
