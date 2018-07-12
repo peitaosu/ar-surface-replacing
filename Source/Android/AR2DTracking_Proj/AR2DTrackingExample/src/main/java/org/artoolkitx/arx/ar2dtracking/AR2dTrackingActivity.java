@@ -36,7 +36,11 @@
 
 package org.artoolkitx.arx.ar2dtracking;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import org.artoolkitx.arx.arxj.ARActivity;
@@ -51,6 +55,10 @@ public class AR2dTrackingActivity extends ARActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+        }
     }
 
     /**
@@ -67,5 +75,16 @@ public class AR2dTrackingActivity extends ARActivity {
     @Override
     protected FrameLayout supplyFrameLayout() {
         return (FrameLayout) this.findViewById(R.id.mainFrameLayout);
+    }
+
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    private static int REQUEST_PERMISSION_CODE = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
