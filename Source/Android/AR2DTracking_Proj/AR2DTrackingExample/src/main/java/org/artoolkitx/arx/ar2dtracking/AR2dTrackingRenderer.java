@@ -73,12 +73,17 @@ class AR2dTrackingRenderer extends ARRenderer {
     @Override
     public boolean configureARScene() {
         File storageDir = new File(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" );
-        String storageFiles[] = storageDir.list();
+        File storageFiles[] = storageDir.listFiles();
         int fileCount = storageFiles.length;
+        if (fileCount == 0) {
+            storageFiles = new File[1];
+            storageFiles[0] = new File("Data/pinball.jpg");
+            fileCount = 1;
+        }
         trackables = new Trackable[fileCount];
         trackableUIDs = new int[fileCount];
         for (int i = 0; i < fileCount; i++) {
-            trackables[i] = new Trackable(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" + Arrays.asList(storageFiles), 1.0f);
+            trackables[i] = new Trackable( storageFiles[i].toString(), 1.0f);
         }
         int i = 0;
         for (Trackable trackable : trackables) {

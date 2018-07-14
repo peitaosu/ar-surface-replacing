@@ -77,10 +77,9 @@ public class AR2dTrackingApplication extends Application {
     }
 
     protected void initializeStorage() {
-        String filepath = Environment.getExternalStorageDirectory().getPath();
-        File file = new File(filepath + "/ARSUR" );
-        if (!file.exists()) {
-            file.mkdirs();
+        File storageDir = new File(Environment.getExternalStorageDirectory().getPath() + "/ARSUR" );
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
         }
     }
 }
